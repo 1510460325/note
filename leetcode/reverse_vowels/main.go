@@ -3,14 +3,14 @@ package main
 import "fmt"
 
 func main() {
-	fmt.Println(reverseVowels("leetcode"))
+	fmt.Println(reverseStr("abcd", 2))
 }
 
 func reverseVowels(s string) string {
 	index := make([]int, 0)
 	for i := range s {
 		if s[i] == 'a' || s[i] == 'e' || s[i] == 'i' || s[i] == 'o' || s[i] == 'u' ||
-			s[i] == 'A' || s[i] == 'E' || s[i] == 'I' || s[i] == 'O' || s[i] == 'U'{
+			s[i] == 'A' || s[i] == 'E' || s[i] == 'I' || s[i] == 'O' || s[i] == 'U' {
 			index = append(index, i)
 		}
 	}
@@ -25,4 +25,28 @@ func reverseVowels(s string) string {
 		j--
 	}
 	return string(ans)
+}
+
+func reverseStr(s string, k int) (ans string) {
+	for i := 0; i < len(s); i += 2 * k {
+		j := i + 2*k
+		if j <= len(s) {
+			ans += reverseK(s[i:i+k]) + s[i+k:j]
+			continue
+		}
+		j = i + k
+		if j <= len(s) {
+			ans += reverseK(s[i:i+k]) + s[i+k:]
+			continue
+		}
+		ans += reverseK(s[i:])
+	}
+	return ans
+}
+
+func reverseK(s string) (ans string) {
+	for _, j := range s {
+		ans = string(j) + ans
+	}
+	return ans
 }
