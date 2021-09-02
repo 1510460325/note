@@ -20,3 +20,19 @@ func getKthFromEnd(head *ListNode, k int) *ListNode {
 	}
 	return head
 }
+
+func swapPairs(head *ListNode) *ListNode {
+	var pre *ListNode
+	p := head
+	for p != nil && p.Next != nil {
+		if pre != nil {
+			pre.Next = p.Next
+		} else {
+			head = p.Next
+		}
+		pre = p
+		p.Next, p.Next.Next = p.Next.Next, p
+		p = p.Next
+	}
+	return head
+}
