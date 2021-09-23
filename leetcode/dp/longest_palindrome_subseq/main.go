@@ -3,7 +3,7 @@ package main
 import "fmt"
 
 func main() {
-	fmt.Println(longestPalindromeSubseq("aaab"))
+	fmt.Println(longestPalindromeSubseqV2("cbbdc"))
 }
 
 func longestPalindromeSubseq(s string) int {
@@ -30,9 +30,42 @@ func longestPalindromeSubseq(s string) int {
 	return dp[0][len(s)-1]
 }
 
-func max(a, b int) int {
-	if a > b {
-		return a
+func max(nums ...int) int {
+	tem := nums[0]
+	for _, i := range nums {
+		if tem < i {
+			tem = i
+		}
 	}
-	return b
+	return tem
+}
+
+func longestPalindromeSubseqV2(s string) int {
+	length := len(s)
+	if length < 2 {
+		return length
+	}
+	dp := make([][]int, length)
+	for i := range dp {
+		dp[i] = make([]int, length)
+		dp[i][i] = 1
+	}
+	value := func(i, j int) int {
+		if i > j {
+			return 0
+		}
+		return dp[i][j]
+	}
+	borderValue := func(i, j int) int {
+		if s[i] == s[j] {
+			return 2
+		}
+		return 0
+	}
+	for i := length - 2; i >= 0; i-- {
+		for j := i + 1; j < length; j++ {
+			dp[i][j] = max(value(i+1, j), value(i, j-1), value(i+1, j-1)+borderValue(i, j))
+		}
+	}
+	return dp[0][length-1]
 }
