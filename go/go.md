@@ -32,7 +32,8 @@ type bmap struct {
 * 8 个满了，则通过 overflow 找到下个桶
 * 如果最后一个桶也满了，则新建桶，插入数据
 
-***扩容***: 增量扩容
+***扩容***: 增量扩容  
 当 count 达到 6.5 * 2 ^ B 次方或者 overflow 过多，会触发扩容操作
 * 新建一个 bucket 数组
-* 当下次有写操作时，将会触发 growWork 搬迁对应的 bucket
+* 写操作时如果发现扩容还在进行中（old != nil），将会 growWork 搬迁对应的 bucket
+* 如果所有 bucket 都已经迁移完毕，则删除 old 指针
