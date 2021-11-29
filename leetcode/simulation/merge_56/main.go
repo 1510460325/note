@@ -12,6 +12,10 @@ func main() {
 	}))
 }
 
+func insert(intervals [][]int, newInterval []int) [][]int {
+	return merge(append(intervals, newInterval))
+}
+
 func merge(intervals [][]int) (ans [][]int) {
 	sort.Slice(intervals, func(i, j int) bool {
 		return intervals[i][0] < intervals[j][0]
