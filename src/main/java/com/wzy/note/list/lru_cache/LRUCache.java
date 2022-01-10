@@ -5,7 +5,7 @@ import java.util.Map;
 
 class LRUCache extends LinkedHashMap<Integer, Integer> implements Map<Integer, Integer> {
 
-    private Integer capacity;
+    private final Integer capacity;
 
     public LRUCache(int capacity) {
         super(capacity, 0.6f, true);
